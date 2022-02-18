@@ -113,9 +113,6 @@ fn decode_x_coordinate(mut u []byte) ?big.Integer {
 }
 
 fn scalar_multiply(k big.Integer, u big.Integer) ?big.Integer {
-	if k.len != 32 {
-		return error("curve size doesn't allowed, get $k.len")
-	}
 	mut x_1 := u
 	mut x_2 := x25519.cv_one
 	mut z_2 := x25519.cv_zero
