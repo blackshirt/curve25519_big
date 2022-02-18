@@ -9,8 +9,8 @@ struct Xdata {
 	out string
 }
 
-fn test_curve_x25519_rfc_vector() ? {
-	data := [
+const (
+	data = [
 		Xdata{
 			k: 'a546e36bf0527c9d3b16154b82465edd62144c0ac1fc5a18506a2244ba449ac4'
 			u: 'e6db6867583030db3594c1a424b15f7c726624ec26b3353b10a903a6d0ab1c4c'
@@ -22,7 +22,10 @@ fn test_curve_x25519_rfc_vector() ? {
 			out: '95cbde9476e8907d7aade45cb4b873f88b595a68799fa152e6f8f7647aac7957'
 		},
 	]
+)
 
+/*
+fn test_curve_x25519_rfc_vector() ? {
 	for t in data {
 		mut scalar := hex.decode(t.k) ?
 		mut cord := hex.decode(t.u) ?
@@ -30,6 +33,18 @@ fn test_curve_x25519_rfc_vector() ? {
 		expected := hex.decode(t.out) ?
 
 		result := x25519(mut scalar, mut cord) ?
+		assert result == expected
+	}
+}*/
+
+fn test_curve_gmp_x25519_rfc_vector() ? {
+	for t in x25519.data {
+		mut scalar := hex.decode(t.k) ?
+		mut cord := hex.decode(t.u) ?
+
+		expected := hex.decode(t.out) ?
+
+		result := gmp_x25519(mut scalar, mut cord) ?
 		assert result == expected
 	}
 }
